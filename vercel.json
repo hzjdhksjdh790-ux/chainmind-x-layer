@@ -4,6 +4,10 @@
     {
       "src": "/api/okx",
       "dest": "/api/okx.js"
+    },
+    {
+      "src": "/(.*)",
+      "dest": "/index.html"
     }
   ]
 }
