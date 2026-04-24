@@ -58,6 +58,7 @@ const ALLOWED_PATHS = [
   '/api/v6/dex/aggregator/supported/liquidity-source',
   '/api/v6/dex/aggregator/get-liquidity',
   '/api/v6/dex/aggregator/get-tokens',
+  '/api/v6/dex/aggregator/supported/tokens',
   '/api/v6/dex/aggregator/all-tokens',
   '/api/v6/dex/aggregator/approve-transaction',
   '/api/v5/wallet/token/current-price',
