@@ -335,23 +335,23 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);min-height:
       <div class="panel-body">
         <div style="display:grid;grid-template-columns:1fr 1fr 1fr;gap:12px;margin-bottom:16px;">
           <div>
-            <div class="stat-cell-label">FROM TOKEN</div>
-            <select id="fromToken" style="width:100%;background:var(--bg);border:1px solid var(--border);color:var(--white);padding:8px 12px;font-family:var(--mono);font-size:12px;margin-top:4px;">
+            <div class="stat-cell-label">FROM TOKEN <span id="fromCount" style="color:var(--dark-gray);font-size:9px;"></span></div>
+            <input id="fromSearch" type="text" placeholder="🔍 Search..." style="width:100%;background:var(--bg);border:1px solid var(--border);color:var(--gray);padding:6px 12px;font-family:var(--mono);font-size:10px;margin-top:4px;margin-bottom:2px;" oninput="filterTokens('from')">
+            <select id="fromToken" style="width:100%;background:var(--bg);border:1px solid var(--border);color:var(--white);padding:8px 12px;font-family:var(--mono);font-size:12px;">
               <option value="0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE" selected>OKB (Native)</option>
-              <option value="0x1e4a5963abfd975d8c9021ce480b42188849d41d">USDT</option>
             </select>
           </div>
           <div>
-            <div class="stat-cell-label">TO TOKEN</div>
-            <select id="toToken" style="width:100%;background:var(--bg);border:1px solid var(--border);color:var(--white);padding:8px 12px;font-family:var(--mono);font-size:12px;margin-top:4px;">
+            <div class="stat-cell-label">TO TOKEN <span id="toCount" style="color:var(--dark-gray);font-size:9px;"></span></div>
+            <input id="toSearch" type="text" placeholder="🔍 Search..." style="width:100%;background:var(--bg);border:1px solid var(--border);color:var(--gray);padding:6px 12px;font-family:var(--mono);font-size:10px;margin-top:4px;margin-bottom:2px;" oninput="filterTokens('to')">
+            <select id="toToken" style="width:100%;background:var(--bg);border:1px solid var(--border);color:var(--white);padding:8px 12px;font-family:var(--mono);font-size:12px;">
               <option value="0x1e4a5963abfd975d8c9021ce480b42188849d41d" selected>USDT</option>
-              <option value="0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE">OKB (Native)</option>
             </select>
           </div>
           <div>
             <div class="stat-cell-label">AMOUNT</div>
             <input id="swapAmount" type="text" value="1000000000000000000" style="width:100%;background:var(--bg);border:1px solid var(--border);color:var(--white);padding:8px 12px;font-family:var(--mono);font-size:12px;margin-top:4px;" placeholder="Amount in wei">
-            <div style="font-size:10px;color:var(--dark-gray);margin-top:2px;">= 1 OKB (18 decimals)</div>
+            <div id="amountHint" style="font-size:10px;color:var(--dark-gray);margin-top:2px;">= 1 OKB (18 decimals)</div>
           </div>
         </div>
         <button class="btn-primary" onclick="callDexQuote()" id="apiBtn1" data-i18n="api.fetch_quote">⚡ FETCH LIVE QUOTE FROM X LAYER</button>
@@ -379,7 +379,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);min-height:
     <!-- API Call Panel: Liquidity Sources -->
     <div class="panel">
       <div class="panel-head">
-        <span class="panel-label">GET /api/v6/dex/aggregator/liquidity-source?chainIndex=196</span>
+        <span class="panel-label">GET /api/v6/dex/aggregator/get-liquidity?chainIndex=196</span>
         <span class="panel-badge pb-cyan" id="apiStatus3" data-i18n="api.ready">READY</span>
       </div>
       <div class="panel-body">
@@ -903,7 +903,7 @@ function showPage(id){
    ═══════════════════════════════════════════════════════════════ */
 
 // ▼▼▼ CHANGE THIS to your Vercel deployment URL ▼▼▼
-const PROXY_BASE = 'https://chainmind-x-layer.vercel.app/api/okx';
+const PROXY_BASE = 'https://chainmind-x-layer.vercel.app/api/okx';  // e.g. 'https://chainmind-backend.vercel.app/api/okx'
 // ▲▲▲ CHANGE THIS ▲▲▲
 
 const OKX_DIRECT = 'https://web3.okx.com/api/v6/dex/aggregator';
@@ -1083,6 +1083,8 @@ async function callLiquiditySources() {
 }
 
 // ── Auto-check proxy status on page load ──
+let allTokens = []; // cache loaded tokens
+
 window.addEventListener('DOMContentLoaded', () => {
   const indicators = ['apiStatus1','apiStatus2','apiStatus3'];
   if (!PROXY_BASE) {
@@ -1090,8 +1092,88 @@ window.addEventListener('DOMContentLoaded', () => {
       const el = document.getElementById(id);
       if (el) { el.textContent = '⚠️ SETUP NEEDED'; el.className = 'panel-badge b-amber'; }
     });
+  } else {
+    // Auto-load all X Layer tokens on page load
+    loadXLayerTokens();
   }
 });
+
+// ── Load all tokens from X Layer ──
+async function loadXLayerTokens() {
+  try {
+    const data = await okxFetch('/api/v6/dex/aggregator/all-tokens', { chainIndex: XLAYER_CHAIN });
+    if (data.code === '0' && data.data) {
+      allTokens = data.data;
+      // Sort: put common tokens first
+      const priority = ['OKB','WOKB','USDT','USDC','WETH','WBTC','DAI'];
+      allTokens.sort((a,b) => {
+        const ai = priority.indexOf(a.tokenSymbol);
+        const bi = priority.indexOf(b.tokenSymbol);
+        if (ai !== -1 && bi !== -1) return ai - bi;
+        if (ai !== -1) return -1;
+        if (bi !== -1) return 1;
+        return (a.tokenSymbol || '').localeCompare(b.tokenSymbol || '');
+      });
+      // Add native OKB at top if not present
+      if (!allTokens.find(t => t.tokenContractAddress === '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE')) {
+        allTokens.unshift({ tokenSymbol: 'OKB', tokenName: 'OKB (Native)', tokenContractAddress: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE', decimal: '18', decimals: '18' });
+      }
+      populateSelect('fromToken', allTokens, '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE');
+      populateSelect('toToken', allTokens, '0x1e4a5963abfd975d8c9021ce480b42188849d41d');
+      document.getElementById('fromCount').textContent = `(${allTokens.length} tokens)`;
+      document.getElementById('toCount').textContent = `(${allTokens.length} tokens)`;
+    }
+  } catch(e) {
+    console.error('Failed to load tokens:', e);
+  }
+}
+
+function populateSelect(selectId, tokens, defaultVal) {
+  const sel = document.getElementById(selectId);
+  const curVal = sel.value || defaultVal;
+  sel.innerHTML = '';
+  tokens.forEach(t => {
+    const opt = document.createElement('option');
+    opt.value = t.tokenContractAddress;
+    opt.textContent = `${t.tokenSymbol} — ${t.tokenName || t.tokenSymbol}`;
+    if (t.tokenContractAddress === curVal) opt.selected = true;
+    sel.appendChild(opt);
+  });
+  // Update amount hint when selection changes
+  sel.onchange = () => updateAmountHint();
+  updateAmountHint();
+}
+
+function filterTokens(which) {
+  const searchVal = document.getElementById(which + 'Search').value.toLowerCase();
+  const selectId = which + 'Token';
+  const sel = document.getElementById(selectId);
+  const curVal = sel.value;
+  const filtered = allTokens.filter(t =>
+    (t.tokenSymbol || '').toLowerCase().includes(searchVal) ||
+    (t.tokenName || '').toLowerCase().includes(searchVal) ||
+    (t.tokenContractAddress || '').toLowerCase().includes(searchVal)
+  );
+  sel.innerHTML = '';
+  filtered.forEach(t => {
+    const opt = document.createElement('option');
+    opt.value = t.tokenContractAddress;
+    opt.textContent = `${t.tokenSymbol} — ${t.tokenName || t.tokenSymbol}`;
+    if (t.tokenContractAddress === curVal) opt.selected = true;
+    sel.appendChild(opt);
+  });
+}
+
+function updateAmountHint() {
+  const fromAddr = document.getElementById('fromToken').value;
+  const token = allTokens.find(t => t.tokenContractAddress === fromAddr);
+  const dec = token ? (token.decimal || token.decimals || '18') : '18';
+  const sym = token ? token.tokenSymbol : 'TOKEN';
+  const amount = document.getElementById('swapAmount').value;
+  const readable = (parseFloat(amount) / Math.pow(10, parseInt(dec))).toFixed(4);
+  const hint = document.getElementById('amountHint');
+  if (hint) hint.textContent = `= ${readable} ${sym} (${dec} decimals)`;
+}
 </script>
 </body>
 </html>
