@@ -236,8 +236,8 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);min-height:
     <div class="display-xl">X LAYER<br><span style="color:var(--cyan)" data-i18n="hero.line2">FULL-STACK DEFI</span><br><span style="color:var(--cyan)" data-i18n="hero.line3">AGENT</span></div>
     <p class="hero-desc" data-i18n="hero.desc">The Neon Architect of decentralized finance. Recursive logic meets on-chain execution. Analyze, route, and compound with mathematical precision.</p>
     <div class="hero-btns">
-      <button class="btn-primary" data-i18n="hero.btn1">INITIALIZE PROTOCOL</button>
-      <button class="btn-outline" data-i18n="hero.btn2">VIEW DOCUMENTATION</button>
+      <button class="btn-primary" data-i18n="hero.btn1" onclick="connectWallet()">INITIALIZE PROTOCOL</button>
+      <button class="btn-outline" data-i18n="hero.btn2" onclick="window.open('https://github.com/hzjdhksjdh790-ux/chainmind-x-layer','_blank')">VIEW DOCUMENTATION</button>
     </div>
     <div class="hero-stats">
       <div class="hero-stat"><span class="dot"></span>LATENCY: <span class="hl" id="heroLatency">—</span></div>
@@ -262,21 +262,21 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);min-height:
       <div class="mod-icon">⚙️</div>
       <div class="mod-title" data-i18n="mod.ai">AI Decision Engine</div>
       <div class="mod-desc" data-i18n="mod.ai_desc">Proprietary neural architecture processing real-time market volatility and liquidity shifts.</div>
-      <div class="mod-link" data-i18n="mod.ai_link">LOAD SUB-ROUTINE →</div>
+      <div class="mod-link" data-i18n="mod.ai_link" onclick="showPage('yield')" style="cursor:pointer">LOAD SUB-ROUTINE →</div>
     </div>
     <div class="mod-card">
       <div class="mod-num">02 //</div>
       <div class="mod-icon">💎</div>
       <div class="mod-title">OnchainOS Skill</div>
       <div class="mod-desc" data-i18n="mod.onchain_desc">Standardized interface for cross-chain execution and smart contract interoperability.</div>
-      <div class="mod-link" data-i18n="mod.onchain_link">VIEW INTEGRATIONS →</div>
+      <div class="mod-link" data-i18n="mod.onchain_link" onclick="showPage('route')" style="cursor:pointer">VIEW INTEGRATIONS →</div>
     </div>
     <div class="mod-card">
       <div class="mod-num">03 //</div>
       <div class="mod-icon">🔄</div>
       <div class="mod-title">Uniswap Skill</div>
       <div class="mod-desc" data-i18n="mod.uni_desc">Optimized LP management and automated swap routing with minimal slippage algorithms.</div>
-      <div class="mod-link" data-i18n="mod.uni_link">PROTOCOL ACCESS →</div>
+      <div class="mod-link" data-i18n="mod.uni_link" onclick="showPage('pay')" style="cursor:pointer">PROTOCOL ACCESS →</div>
     </div>
   </div>
 
@@ -400,7 +400,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);min-height:
       <div class="cta-title" data-i18n-html="cta.title">READY TO <span class="cyan">DEPLOY?</span></div>
       <div class="cta-desc" data-i18n="cta.desc">Integrate your capital with the most advanced DeFi agent on X Layer. Sophistication by design.</div>
     </div>
-    <button class="btn-primary" data-i18n="cta.btn">ACCESS DASHBOARD</button>
+    <button class="btn-primary" data-i18n="cta.btn" onclick="openSwapPanel()">ACCESS DASHBOARD</button>
   </div>
 </div>
 
@@ -430,7 +430,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);min-height:
           <div class="stat-cell"><div class="stat-cell-label" data-i18n="yield.util">AGENT UTILIZATION</div><div class="stat-cell-val">84.2%</div></div>
           <div class="stat-cell"><div class="stat-cell-label" data-i18n="yield.harvest">AUTO-HARVEST</div><div class="stat-cell-val" data-i18n="yield.harvest_val">ENABLED</div></div>
         </div>
-        <button class="btn-primary" style="width:100%;margin-top:20px;" data-i18n="yield.deploy_btn">EXECUTE STRATEGY DEPLOYMENT</button>
+        <button class="btn-primary" style="width:100%;margin-top:20px;" data-i18n="yield.deploy_btn" onclick="showPage('overview');setTimeout(()=>document.getElementById('apiBtn1').scrollIntoView({behavior:'smooth'}),300)">EXECUTE STRATEGY DEPLOYMENT</button>
       </div>
     </div>
   </div>
@@ -465,7 +465,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);min-height:
       <div class="cta-title" data-i18n-html="yield.cta_title">DEPLOY YOUR <span class="cyan">CAPITAL</span></div>
       <div class="cta-desc" data-i18n="yield.cta_desc">Let ChainMind's AI engine autonomously optimize your yield across X Layer DeFi protocols. Set it and forget it.</div>
     </div>
-    <button class="btn-primary" data-i18n="yield.cta_btn">START EARNING</button>
+    <button class="btn-primary" data-i18n="yield.cta_btn" onclick="connectWallet()">START EARNING</button>
   </div>
 </div>
 
@@ -487,7 +487,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);min-height:
   <div class="stat-row">
     <div class="stat-cell"><div class="stat-cell-label" data-i18n="route.apy">OPTIMAL PATH YIELD</div><div class="stat-cell-val">+14.28%<span class="stat-cell-sub">APY EST.</span></div><div style="font-size:12px;color:var(--gray);margin-top:6px;" data-i18n="route.apy_desc">Real-time aggregation of multi-chain liquidity depth and slippage optimization vectors.</div></div>
     <div class="stat-cell"><div class="stat-cell-label" data-i18n="route.neural">NEURAL PROCESSING</div><div class="stat-cell-val">99.98%</div><div style="margin-top:12px;height:4px;background:var(--border);border-radius:2px;"><div style="width:99.98%;height:100%;background:var(--cyan);border-radius:2px;"></div></div></div>
-    <div class="stat-cell"><div class="stat-cell-label" data-i18n="route.net_status">NETWORK STATUS</div><div style="font-family:var(--mono);font-size:12px;color:var(--cyan);margin:8px 0;" data-i18n="route.nodes">● LIVE // 14 NODES CONNECTED</div><button class="btn-outline" style="width:100%;margin-top:8px;padding:10px;" data-i18n="route.exec_btn">EXECUTE OPTIMIZATION →</button></div>
+    <div class="stat-cell"><div class="stat-cell-label" data-i18n="route.net_status">NETWORK STATUS</div><div style="font-family:var(--mono);font-size:12px;color:var(--cyan);margin:8px 0;" data-i18n="route.nodes">● LIVE // <span id="routeNodes">—</span> DEX SOURCES</div><button class="btn-outline" style="width:100%;margin-top:8px;padding:10px;" data-i18n="route.exec_btn" onclick="showPage('overview');setTimeout(()=>document.getElementById('apiBtn1').scrollIntoView({behavior:'smooth'}),300)">EXECUTE OPTIMIZATION →</button></div>
   </div>
 
   <div style="margin:40px 0;">
@@ -537,7 +537,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);min-height:
       <div class="cta-title" data-i18n-html="route.cta_title">OPTIMIZE YOUR <span class="cyan">ROUTES</span></div>
       <div class="cta-desc" data-i18n="route.cta_desc">Let the neural router find the most efficient path across 500+ liquidity sources on X Layer. Zero manual intervention.</div>
     </div>
-    <button class="btn-primary" data-i18n="route.cta_btn">EXECUTE SWAP</button>
+    <button class="btn-primary" data-i18n="route.cta_btn" onclick="openSwapPanel()">EXECUTE SWAP</button>
   </div>
 </div>
 
@@ -609,7 +609,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);min-height:
             <div style="display:flex;gap:10px;"><span style="color:var(--cyan);font-size:16px;">✓</span><div><div style="font-weight:700;font-size:13px;" data-i18n="pay.feat2">Risk Weighted Adjustments</div><div style="font-size:12px;color:var(--gray);" data-i18n="pay.feat2d">Automatic hedging for volatile asset classes during transit.</div></div></div>
             <div style="display:flex;gap:10px;"><span style="color:var(--cyan);font-size:16px;">✓</span><div><div style="font-weight:700;font-size:13px;" data-i18n="pay.feat3">Zero-Slippage Routing</div><div style="font-size:12px;color:var(--gray);" data-i18n="pay.feat3d">Deep liquidity pools accessed via private intent solvers.</div></div></div>
           </div>
-          <button class="btn-primary" style="width:100%;margin-top:20px;" data-i18n="pay.init_btn">INITIALIZE PAY ⚡</button>
+          <button class="btn-primary" style="width:100%;margin-top:20px;" data-i18n="pay.init_btn" onclick="connectWallet()">INITIALIZE PAY ⚡</button>
         </div>
       </div>
     </div>
@@ -625,8 +625,8 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);min-height:
         <div class="cta-desc" data-i18n="pay.cta_desc">Connect to the global payment mesh and start processing autonomous transactions today.</div>
       </div>
       <div style="display:flex;gap:12px;">
-        <button class="btn-primary" data-i18n="pay.doc_btn">DOCUMENTATION</button>
-        <button class="btn-outline" data-i18n="pay.api_btn">API KEYS</button>
+        <button class="btn-primary" data-i18n="pay.doc_btn" onclick="window.open('https://web3.okx.com/build/dev-docs/wallet-api/dex-swap','_blank')">DOCUMENTATION</button>
+        <button class="btn-outline" data-i18n="pay.api_btn" onclick="window.open('https://web3.okx.com/build','_blank')">API KEYS</button>
       </div>
     </div>
   </div>
@@ -701,7 +701,36 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);min-height:
       <div class="cta-title" data-i18n-html="collab.cta_title">JOIN THE <span class="cyan">AGENT MESH</span></div>
       <div class="cta-desc" data-i18n="collab.cta_desc">Deploy your Agent into the X Layer collaboration network. Share signals, co-execute strategies, and amplify yield through collective intelligence.</div>
     </div>
-    <button class="btn-primary" data-i18n="collab.cta_btn">REGISTER AGENT</button>
+    <button class="btn-primary" data-i18n="collab.cta_btn" onclick="connectWallet()">REGISTER AGENT</button>
+  </div>
+</div>
+
+<!-- ══ SWAP PANEL MODAL ══ -->
+<div id="swapModal" style="display:none;position:fixed;top:0;left:0;right:0;bottom:0;background:rgba(0,0,0,.85);z-index:999;display:none;align-items:center;justify-content:center;">
+  <div style="background:var(--surface);border:1px solid var(--cyan-border);max-width:480px;width:90%;padding:32px;position:relative;">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:24px;">
+      <div style="font-family:var(--display);font-size:28px;letter-spacing:2px;">SWAP<span style="color:var(--cyan)"> ON X LAYER</span></div>
+      <button onclick="closeSwapPanel()" style="background:none;border:1px solid var(--border);color:var(--gray);font-size:18px;width:32px;height:32px;cursor:pointer;font-family:var(--mono);">✕</button>
+    </div>
+    <div id="swapWalletStatus" style="font-family:var(--mono);font-size:11px;color:var(--amber);margin-bottom:16px;padding:8px 12px;border:1px solid var(--border);background:var(--surface2);">⚠️ Connect wallet first</div>
+    <div style="margin-bottom:12px;">
+      <div class="stat-cell-label">FROM</div>
+      <div style="display:flex;gap:8px;">
+        <select id="swapFrom" style="flex:1;background:var(--bg);border:1px solid var(--border);color:var(--white);padding:10px;font-family:var(--mono);font-size:12px;"></select>
+        <input id="swapAmt" type="text" value="1000000000000000000" placeholder="Amount (wei)" style="width:140px;background:var(--bg);border:1px solid var(--border);color:var(--white);padding:10px;font-family:var(--mono);font-size:12px;">
+      </div>
+    </div>
+    <div style="text-align:center;color:var(--cyan);font-size:20px;margin:8px 0;">↓</div>
+    <div style="margin-bottom:20px;">
+      <div class="stat-cell-label">TO</div>
+      <select id="swapTo" style="width:100%;background:var(--bg);border:1px solid var(--border);color:var(--white);padding:10px;font-family:var(--mono);font-size:12px;"></select>
+    </div>
+    <div id="swapQuoteResult" style="display:none;margin-bottom:16px;padding:12px;border:1px solid var(--border);background:var(--surface2);font-family:var(--mono);font-size:11px;color:var(--gray);"></div>
+    <div style="display:flex;gap:8px;">
+      <button class="btn-outline" style="flex:1;" onclick="getSwapQuote()">GET QUOTE</button>
+      <button class="btn-primary" style="flex:1;" onclick="executeSwap()" id="swapExecBtn">SWAP</button>
+    </div>
+    <div style="margin-top:12px;font-family:var(--mono);font-size:9px;color:var(--dark-gray);text-align:center;">Powered by OKX DEX Aggregator · X Layer (chainIndex: 196)</div>
   </div>
 </div>
 
@@ -722,9 +751,9 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);min-height:
   <div style="display:flex;align-items:center;justify-content:space-between;flex-wrap:wrap;gap:12px;padding-top:12px;border-top:1px solid var(--border);">
     <div class="footer-left">CHAINMIND // VER 2.0.4 – [SYSTEM STATUS: <span class="sys">OPTIMAL</span>] · DEPLOYED ON X LAYER (CHAIN ID: 196)</div>
     <div style="display:flex;gap:16px;align-items:center;">
-      <span class="footer-link">DOCUMENTATION</span>
-      <span class="footer-link">PRIVACY</span>
-      <span class="footer-link">TERMS</span>
+      <span class="footer-link" style="cursor:pointer" onclick="window.open('https://web3.okx.com/build/dev-docs/wallet-api/dex-swap','_blank')">DOCUMENTATION</span>
+      <span class="footer-link" style="cursor:pointer" onclick="window.open('https://www.okx.com/privacy','_blank')">PRIVACY</span>
+      <span class="footer-link" style="cursor:pointer" onclick="window.open('https://www.okx.com/terms-of-service','_blank')">TERMS</span>
       <span style="font-family:var(--mono);font-size:9px;color:var(--muted);">© 2025 CHAINMIND</span>
     </div>
   </div>
@@ -828,7 +857,7 @@ en:{
 "yield.w2":"02 // MODEL","yield.w2d":"Simulating IL & slippage impacts","yield.w3":"03 // EXECUTE","yield.w3d":"Atomic bundle submission",
 "yield.w4":"04 // HARVEST","yield.w4d":"Compounding realized gains",
 "route.apy":"OPTIMAL PATH YIELD","route.apy_desc":"Real-time aggregation of multi-chain liquidity depth and slippage optimization vectors.",
-"route.neural":"NEURAL PROCESSING","route.net_status":"NETWORK STATUS","route.nodes":"● LIVE // 14 NODES CONNECTED","route.exec_btn":"EXECUTE OPTIMIZATION →",
+"route.neural":"NEURAL PROCESSING","route.net_status":"NETWORK STATUS","route.nodes":"● LIVE // <span id="routeNodes">—</span> DEX SOURCES","route.exec_btn":"EXECUTE OPTIMIZATION →",
 "route.matrix_label":"EXECUTION MATRIX","route.matrix_title":"LIVE EXECUTION MATRIX",
 "route.pi":"PROTOCOL INSTANCE","route.gas":"GAS EFFICIENCY","route.return":"RETURN ANALYSIS","route.status":"STATUS",
 "route.secondary":"SECONDARY","route.optimal":"OPTIMAL","route.active":"ACTIVE",
@@ -1208,6 +1237,89 @@ async function loadYieldData() {
 function loadRouteData(latency) {
   const el = document.getElementById('routeLatency');
   if (el) el.textContent = latency + 'ms';
+  const nodes = document.getElementById('routeNodes');
+  if (nodes) nodes.textContent = liquidityData.length || '—';
+}
+
+// ── Swap Panel ──
+function openSwapPanel() {
+  const modal = document.getElementById('swapModal');
+  modal.style.display = 'flex';
+  const swapFrom = document.getElementById('swapFrom');
+  const swapTo = document.getElementById('swapTo');
+  if (swapFrom && allTokens.length > 0) {
+    swapFrom.innerHTML = allTokens.map(t => `<option value="${t.tokenContractAddress}" ${t.tokenSymbol==='OKB'?'selected':''}>${t.tokenSymbol}</option>`).join('');
+    swapTo.innerHTML = allTokens.map(t => `<option value="${t.tokenContractAddress}" ${t.tokenSymbol==='USDT'?'selected':''}>${t.tokenSymbol}</option>`).join('');
+  }
+  updateSwapWalletStatus();
+}
+
+function closeSwapPanel() {
+  document.getElementById('swapModal').style.display = 'none';
+}
+
+function updateSwapWalletStatus() {
+  const status = document.getElementById('swapWalletStatus');
+  const addr = document.getElementById('walletAddr')?.textContent;
+  if (addr && addr !== 'CONNECT') {
+    status.innerHTML = `<span style="color:var(--success)">● Connected: ${addr}</span>`;
+    status.style.borderColor = 'var(--cyan-border)';
+  } else {
+    status.innerHTML = '⚠️ <span style="cursor:pointer;text-decoration:underline;" onclick="connectWallet()">Connect wallet to swap</span>';
+  }
+}
+
+async function getSwapQuote() {
+  const from = document.getElementById('swapFrom').value;
+  const to = document.getElementById('swapTo').value;
+  const amt = document.getElementById('swapAmt').value;
+  const result = document.getElementById('swapQuoteResult');
+  result.style.display = 'block';
+  result.innerHTML = '<span style="color:var(--amber)">Fetching quote...</span>';
+  try {
+    const data = await okxFetch('/api/v6/dex/aggregator/quote', {
+      chainIndex: XLAYER_CHAIN, fromTokenAddress: from, toTokenAddress: to, amount: amt
+    });
+    if (data.code === '0' && data.data && data.data[0]) {
+      const q = data.data[0];
+      const toAmt = (parseFloat(q.toTokenAmount) / Math.pow(10, parseInt(q.toToken?.decimal || '18'))).toFixed(6);
+      const routes = (q.dexRouterList || []).map(r => `${r.dexProtocol?.dexName}: ${r.dexProtocol?.percent}%`).join(', ');
+      result.innerHTML = `<div style="color:var(--cyan);font-size:14px;margin-bottom:8px;">${q.fromToken?.tokenSymbol} → ${toAmt} ${q.toToken?.tokenSymbol}</div>Price: $${parseFloat(q.fromToken?.tokenUnitPrice||'0').toFixed(2)}<br>Gas: ${q.estimateGasFee||'—'}<br>Impact: ${q.priceImpactPercentage||'0'}%<br>Route: ${routes||'Direct'}`;
+    } else {
+      result.innerHTML = `<span style="color:var(--amber)">No quote: ${data.msg || 'Pair may lack liquidity'}</span>`;
+    }
+  } catch(e) { result.innerHTML = `<span style="color:var(--danger)">Error: ${e.message}</span>`; }
+}
+
+async function executeSwap() {
+  const addr = document.getElementById('walletAddr')?.textContent;
+  if (!addr || addr === 'CONNECT') { alert('Please connect your wallet first.'); connectWallet(); return; }
+  const from = document.getElementById('swapFrom').value;
+  const to = document.getElementById('swapTo').value;
+  const amt = document.getElementById('swapAmt').value;
+  const result = document.getElementById('swapQuoteResult');
+  const btn = document.getElementById('swapExecBtn');
+  btn.disabled = true; btn.textContent = '⏳ PROCESSING...';
+  result.style.display = 'block';
+  result.innerHTML = '<span style="color:var(--amber)">Getting swap data from OKX...</span>';
+  try {
+    const data = await okxFetch('/api/v6/dex/aggregator/swap', {
+      chainIndex: XLAYER_CHAIN, fromTokenAddress: from, toTokenAddress: to,
+      amount: amt, slippagePercent: '0.5', userWalletAddress: addr.includes('...') ? '0x0000000000000000000000000000000000000000' : addr
+    });
+    if (data.code === '0' && data.data && data.data[0]) {
+      const tx = data.data[0].tx;
+      if (tx && (window.ethereum || window.okxwallet)) {
+        result.innerHTML = '<span style="color:var(--cyan)">Sending transaction to wallet for signing...</span>';
+        const provider = window.okxwallet || window.ethereum;
+        const txHash = await provider.request({ method: 'eth_sendTransaction', params: [{ from: tx.from, to: tx.to, data: tx.data, value: tx.value || '0x0' }] });
+        result.innerHTML = `<div style="color:var(--success);margin-bottom:8px;">✅ Transaction submitted!</div>TX: <a href="https://www.okx.com/explorer/xlayer/tx/${txHash}" target="_blank" style="color:var(--cyan);word-break:break-all;">${txHash}</a>`;
+      } else {
+        result.innerHTML = `<span style="color:var(--amber)">Swap data received. Install MetaMask or OKX Wallet to execute.</span>`;
+      }
+    } else { result.innerHTML = `<span style="color:var(--amber)">Swap failed: ${data.msg || 'Unknown error'}</span>`; }
+  } catch(e) { result.innerHTML = `<span style="color:var(--danger)">Error: ${e.message}</span>`; }
+  btn.disabled = false; btn.textContent = 'SWAP';
 }
 
 function connectWallet() {
