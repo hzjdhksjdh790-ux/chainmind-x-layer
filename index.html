@@ -1051,7 +1051,7 @@ async function callLiquiditySources() {
   status.textContent = 'FETCHING'; status.className = 'panel-badge b-amber';
 
   try {
-    const data = await okxFetch('/api/v6/dex/aggregator/supported/liquidity-source', {
+    const data = await okxFetch('/api/v6/dex/aggregator/get-liquidity', {
       chainIndex: XLAYER_CHAIN
     });
     result.style.display = 'block';
