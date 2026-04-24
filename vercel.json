@@ -2,8 +2,8 @@
   "version": 2,
   "routes": [
     {
-      "src": "/api/okx",
-      "dest": "/api/okx.js"
+      "src": "/api/(.*)",
+      "dest": "/api/$1"
     },
     {
       "src": "/(.*)",
