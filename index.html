@@ -213,7 +213,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);min-height:
         <button class="lang-btn" id="langZh" onclick="setLang('zh')">中文</button>
         <button class="lang-btn active" id="langEn" onclick="setLang('en')">EN</button>
       </div>
-      <div class="wallet-badge"><div class="wallet-dot">⬡</div>0X4F...E82</div>
+      <div class="wallet-badge" id="walletBadge" style="cursor:pointer;" onclick="connectWallet()"><div class="wallet-dot">⬡</div><span id="walletAddr">CONNECT</span></div>
     </div>
   </div>
 </div>
@@ -240,9 +240,9 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);min-height:
       <button class="btn-outline" data-i18n="hero.btn2">VIEW DOCUMENTATION</button>
     </div>
     <div class="hero-stats">
-      <div class="hero-stat"><span class="dot"></span>LATENCY: <span class="hl">14MS</span></div>
-      <div class="hero-stat">TVL SECURED: <span class="hl">$143.8M</span></div>
-      <div class="hero-stat">AGENT RECURSION: <span class="hl" data-i18n="hero.recursion">ACTIVE</span></div>
+      <div class="hero-stat"><span class="dot"></span>LATENCY: <span class="hl" id="heroLatency">—</span></div>
+      <div class="hero-stat">SUPPORTED CHAINS: <span class="hl" id="heroChains">—</span></div>
+      <div class="hero-stat">X LAYER TOKENS: <span class="hl" id="heroTokens">—</span></div>
     </div>
   </div>
 
@@ -415,15 +415,15 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);min-height:
     </div>
     <div class="page-hero-right">
       <div class="page-hero-stat-label" data-i18n="yield.tvl_label">TOTAL VALUE LOCKED</div>
-      <div class="page-hero-stat">$142,884,902</div>
+      <div class="page-hero-stat" id="yieldTVL">Loading...</div>
     </div>
   </div>
 
   <div class="two-col">
     <div class="panel" style="grid-column:1/-1;">
-      <div class="panel-head"><span class="panel-label" data-i18n="yield.top_vault">● TOP RECOMMENDED VAULT</span><span class="panel-badge pb-cyan">28.42% APY</span></div>
+      <div class="panel-head"><span class="panel-label" data-i18n="yield.top_vault">● TOP RECOMMENDED VAULT</span><span class="panel-badge pb-cyan" id="yieldTopAPY">— APY</span></div>
       <div class="panel-body">
-        <div style="font-size:22px;font-weight:700;margin-bottom:4px;">ETH/USDC CONCENTRATED</div>
+        <div style="font-size:22px;font-weight:700;margin-bottom:4px;" id="yieldTopName">Loading...</div>
         <div style="font-size:13px;color:var(--gray);margin-bottom:20px;" data-i18n="yield.vault_desc">Aggregated Liquidity via Uniswap V3 + XSwap</div>
         <div class="stat-row">
           <div class="stat-cell"><div class="stat-cell-label" data-i18n="yield.risk">RISK RATING</div><div class="stat-cell-val" data-i18n="yield.risk_val">LOW-MEDIUM</div></div>
@@ -441,12 +441,8 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);min-height:
       <div class="panel-head"><span class="panel-label" data-i18n="yield.analytics">LIVE PROTOCOL ANALYTICS</span><span class="panel-badge pb-green" data-i18n="yield.stable">● NETWORK STABLE</span></div>
       <div class="panel-body" style="padding:0;">
         <table class="tbl">
-          <thead><tr><th data-i18n="yield.th1">PROTOCOL</th><th data-i18n="yield.th2">POOL TYPE</th><th>TVL</th><th data-i18n="yield.th3">CURRENT APY</th><th data-i18n="yield.th4">VOL (24H)</th><th data-i18n="yield.th5">ACTION</th></tr></thead>
-          <tbody>
-            <tr><td><strong>XSwap DEX</strong></td><td>V3 Concentrated</td><td>$24.2M</td><td class="cyan">18.5%</td><td>$2.1M</td><td class="cyan" style="cursor:pointer" data-i18n="yield.deploy">DEPLOY</td></tr>
-            <tr><td><strong>LayerBank</strong></td><td>Lending / Supply</td><td>$102.5M</td><td class="cyan">4.2%</td><td>$840K</td><td class="cyan" style="cursor:pointer" data-i18n="yield.deploy">DEPLOY</td></tr>
-            <tr><td><strong>MindMarket</strong></td><td>Option Vaults</td><td>$12.1M</td><td class="cyan">32.8%</td><td>$4.5M</td><td class="cyan" style="cursor:pointer" data-i18n="yield.deploy">DEPLOY</td></tr>
-          </tbody>
+          <thead><tr><th>PAIR</th><th>ROUTE</th><th>PRICE</th><th>RATE</th><th>IMPACT</th><th data-i18n="yield.th5">ACTION</th></tr></thead>
+          <tbody id="yieldTableBody"><tr><td colspan="6" style="text-align:center;color:var(--dark-gray);padding:20px;">Loading live data...</td></tr></tbody>
         </table>
       </div>
     </div>
@@ -722,7 +718,7 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);min-height:
       <span style="font-family:var(--mono);font-size:9px;color:var(--dark-gray);letter-spacing:1px;padding:3px 8px;border:1px solid var(--border);border-radius:2px;">OKX HACKATHON S3 · X LAYER ARENA</span>
     </div>
     <div style="display:flex;gap:12px;align-items:center;">
-      <a href="https://github.com/" target="_blank" class="footer-link" style="display:flex;align-items:center;gap:5px;border:1px solid var(--border);padding:4px 12px;border-radius:2px;text-decoration:none;">
+      <a href="https://github.com/hzjdhksjdh790-ux/chainmind-x-layer" target="_blank" class="footer-link" style="display:flex;align-items:center;gap:5px;border:1px solid var(--border);padding:4px 12px;border-radius:2px;text-decoration:none;">
         <svg width="14" height="14" viewBox="0 0 16 16" fill="currentColor"><path d="M8 0C3.58 0 0 3.58 0 8c0 3.54 2.29 6.53 5.47 7.59.4.07.55-.17.55-.38 0-.19-.01-.82-.01-1.49-2.01.37-2.53-.49-2.69-.94-.09-.23-.48-.94-.82-1.13-.28-.15-.68-.52-.01-.53.63-.01 1.08.58 1.23.82.72 1.21 1.87.87 2.33.66.07-.52.28-.87.51-1.07-1.78-.2-3.64-.89-3.64-3.95 0-.87.31-1.59.82-2.15-.08-.2-.36-1.02.08-2.12 0 0 .67-.21 2.2.82.64-.18 1.32-.27 2-.27.68 0 1.36.09 2 .27 1.53-1.04 2.2-.82 2.2-.82.44 1.1.16 1.92.08 2.12.51.56.82 1.27.82 2.15 0 3.07-1.87 3.75-3.65 3.95.29.25.54.73.54 1.48 0 1.07-.01 1.93-.01 2.2 0 .21.15.46.55.38A8.013 8.013 0 0016 8c0-4.42-3.58-8-8-8z"/></svg>
         GITHUB
       </a>
@@ -1084,6 +1080,8 @@ async function callLiquiditySources() {
 
 // ── Auto-check proxy status on page load ──
 let allTokens = []; // cache loaded tokens
+let chainData = []; // cache chain data
+let liquidityData = []; // cache liquidity sources
 
 window.addEventListener('DOMContentLoaded', () => {
   const indicators = ['apiStatus1','apiStatus2','apiStatus3'];
@@ -1093,38 +1091,135 @@ window.addEventListener('DOMContentLoaded', () => {
       if (el) { el.textContent = '⚠️ SETUP NEEDED'; el.className = 'panel-badge b-amber'; }
     });
   } else {
-    // Auto-load all X Layer tokens on page load
-    loadXLayerTokens();
+    // Auto-load everything on page load
+    loadAllData();
   }
 });
 
-// ── Load all tokens from X Layer ──
-async function loadXLayerTokens() {
-  try {
-    const data = await okxFetch('/api/v6/dex/aggregator/all-tokens', { chainIndex: XLAYER_CHAIN });
-    if (data.code === '0' && data.data) {
-      allTokens = data.data;
-      // Sort: put common tokens first
-      const priority = ['OKB','WOKB','USDT','USDC','WETH','WBTC','DAI'];
-      allTokens.sort((a,b) => {
-        const ai = priority.indexOf(a.tokenSymbol);
-        const bi = priority.indexOf(b.tokenSymbol);
-        if (ai !== -1 && bi !== -1) return ai - bi;
-        if (ai !== -1) return -1;
-        if (bi !== -1) return 1;
-        return (a.tokenSymbol || '').localeCompare(b.tokenSymbol || '');
-      });
-      // Add native OKB at top if not present
-      if (!allTokens.find(t => t.tokenContractAddress === '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE')) {
-        allTokens.unshift({ tokenSymbol: 'OKB', tokenName: 'OKB (Native)', tokenContractAddress: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE', decimal: '18', decimals: '18' });
-      }
-      populateSelect('fromToken', allTokens, '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE');
-      populateSelect('toToken', allTokens, '0x1e4a5963abfd975d8c9021ce480b42188849d41d');
-      document.getElementById('fromCount').textContent = `(${allTokens.length} tokens)`;
-      document.getElementById('toCount').textContent = `(${allTokens.length} tokens)`;
+async function loadAllData() {
+  const t0 = performance.now();
+  
+  // Load tokens, chains, and liquidity in parallel
+  const [tokensRes, chainsRes, liqRes] = await Promise.allSettled([
+    okxFetch('/api/v6/dex/aggregator/all-tokens', { chainIndex: XLAYER_CHAIN }),
+    okxFetch('/api/v6/dex/aggregator/supported/chain'),
+    okxFetch('/api/v6/dex/aggregator/get-liquidity', { chainIndex: XLAYER_CHAIN })
+  ]);
+
+  const latency = Math.round(performance.now() - t0);
+
+  // Process tokens
+  if (tokensRes.status === 'fulfilled' && tokensRes.value.code === '0') {
+    allTokens = tokensRes.value.data || [];
+    const priority = ['OKB','WOKB','USDT','USDC','WETH','WBTC','DAI'];
+    allTokens.sort((a,b) => {
+      const ai = priority.indexOf(a.tokenSymbol);
+      const bi = priority.indexOf(b.tokenSymbol);
+      if (ai !== -1 && bi !== -1) return ai - bi;
+      if (ai !== -1) return -1;
+      if (bi !== -1) return 1;
+      return (a.tokenSymbol || '').localeCompare(b.tokenSymbol || '');
+    });
+    if (!allTokens.find(t => t.tokenContractAddress === '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE')) {
+      allTokens.unshift({ tokenSymbol: 'OKB', tokenName: 'OKB (Native)', tokenContractAddress: '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE', decimal: '18', decimals: '18' });
     }
-  } catch(e) {
-    console.error('Failed to load tokens:', e);
+    populateSelect('fromToken', allTokens, '0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE');
+    populateSelect('toToken', allTokens, allTokens.find(t=>t.tokenSymbol==='USDT')?.tokenContractAddress || allTokens[1]?.tokenContractAddress);
+    document.getElementById('fromCount').textContent = `(${allTokens.length} tokens)`;
+    document.getElementById('toCount').textContent = `(${allTokens.length} tokens)`;
+  }
+
+  // Process chains
+  if (chainsRes.status === 'fulfilled' && chainsRes.value.code === '0') {
+    chainData = chainsRes.value.data || [];
+  }
+
+  // Process liquidity
+  if (liqRes.status === 'fulfilled' && liqRes.value.code === '0') {
+    liquidityData = liqRes.value.data || [];
+  }
+
+  // ── Update Overview Hero Stats ──
+  const heroLatency = document.getElementById('heroLatency');
+  const heroChains = document.getElementById('heroChains');
+  const heroTokens = document.getElementById('heroTokens');
+  if (heroLatency) heroLatency.textContent = latency + 'MS';
+  if (heroChains) heroChains.textContent = chainData.length || '—';
+  if (heroTokens) heroTokens.textContent = allTokens.length + ' ON X LAYER';
+
+  // ── Update Yield Page with real token data ──
+  loadYieldData();
+
+  // ── Update Route Page with real quote comparison ──
+  loadRouteData(latency);
+}
+
+// ── Yield Page: Load real token market data ──
+async function loadYieldData() {
+  if (allTokens.length === 0) return;
+  const pairs = [];
+  const stables = allTokens.filter(t => ['USDT','USDC','DAI'].includes(t.tokenSymbol));
+  const nonStables = allTokens.filter(t => !['USDT','USDC','DAI'].includes(t.tokenSymbol));
+  for (const ns of nonStables.slice(0, 5)) {
+    for (const s of stables.slice(0, 1)) {
+      pairs.push({ from: ns, to: s });
+    }
+  }
+  const results = [];
+  for (const pair of pairs) {
+    try {
+      const dec = pair.from.decimal || pair.from.decimals || '18';
+      const amount = BigInt(10) ** BigInt(parseInt(dec));
+      const data = await okxFetch('/api/v6/dex/aggregator/quote', {
+        chainIndex: XLAYER_CHAIN,
+        fromTokenAddress: pair.from.tokenContractAddress,
+        toTokenAddress: pair.to.tokenContractAddress,
+        amount: amount.toString()
+      });
+      if (data.code === '0' && data.data && data.data[0]) {
+        const q = data.data[0];
+        const toAmt = parseFloat(q.toTokenAmount) / Math.pow(10, parseInt(q.toToken?.decimal || '18'));
+        const routes = (q.dexRouterList || []).map(r => r.dexProtocol?.dexName).filter(Boolean).join(' + ');
+        results.push({
+          fromSym: pair.from.tokenSymbol, toSym: pair.to.tokenSymbol,
+          price: parseFloat(q.fromToken?.tokenUnitPrice || '0'),
+          rate: toAmt.toFixed(4), gas: q.estimateGasFee || '—',
+          routes: routes || 'Direct', impact: q.priceImpactPercentage || '0'
+        });
+      }
+    } catch(e) {}
+  }
+  const yieldTVL = document.getElementById('yieldTVL');
+  if (yieldTVL) yieldTVL.textContent = `${liquidityData.length || '—'} DEX Sources`;
+  if (results.length > 0) {
+    const top = results[0];
+    const topName = document.getElementById('yieldTopName');
+    const topAPY = document.getElementById('yieldTopAPY');
+    if (topName) topName.textContent = `${top.fromSym} / ${top.toSym}`;
+    if (topAPY) topAPY.textContent = `$${top.price.toFixed(2)}`;
+  }
+  const tbody = document.getElementById('yieldTableBody');
+  if (tbody && results.length > 0) {
+    tbody.innerHTML = results.map(r => `<tr><td><strong>${r.fromSym}/${r.toSym}</strong></td><td>${r.routes}</td><td>$${r.price.toFixed(2)}</td><td class="cyan">1 → ${r.rate}</td><td>${r.impact}%</td><td class="cyan" style="cursor:pointer">QUOTE</td></tr>`).join('');
+  }
+}
+
+function loadRouteData(latency) {
+  const el = document.getElementById('routeLatency');
+  if (el) el.textContent = latency + 'ms';
+}
+
+function connectWallet() {
+  if (typeof window.ethereum !== 'undefined' || typeof window.okxwallet !== 'undefined') {
+    const provider = window.okxwallet || window.ethereum;
+    provider.request({ method: 'eth_requestAccounts' }).then(accounts => {
+      if (accounts && accounts[0]) {
+        const addr = accounts[0];
+        document.getElementById('walletAddr').textContent = addr.substring(0,6) + '...' + addr.substring(addr.length-4);
+      }
+    }).catch(e => alert('Connection failed: ' + e.message));
+  } else {
+    window.open('https://www.okx.com/web3', '_blank');
   }
 }
 
