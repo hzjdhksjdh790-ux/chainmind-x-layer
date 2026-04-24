@@ -1,0 +1,9 @@
+{
+  "name": "chainmind-backend",
+  "version": "1.0.0",
+  "description": "ChainMind OKX API Proxy for X Layer DeFi Agent",
+  "private": true,
+  "engines": {
+    "node": ">=18"
+  }
+}

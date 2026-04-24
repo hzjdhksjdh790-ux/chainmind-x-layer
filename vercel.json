@@ -1,5 +1,9 @@
 {
-  "buildCommand": "echo 'No build needed'",
-  "installCommand": "echo 'No install needed'",
-  "outputDirectory": "."
+  "version": 2,
+  "routes": [
+    {
+      "src": "/api/okx",
+      "dest": "/api/okx.js"
+    }
+  ]
 }
