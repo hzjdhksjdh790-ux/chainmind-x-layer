@@ -337,14 +337,14 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);min-height:
           <div>
             <div class="stat-cell-label">FROM TOKEN</div>
             <select id="fromToken" style="width:100%;background:var(--bg);border:1px solid var(--border);color:var(--white);padding:8px 12px;font-family:var(--mono);font-size:12px;margin-top:4px;">
-              <option value="0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE">OKB (Native)</option>
-              <option value="0x5a77f1443d16ee5761d310e38b7a0bba9c0f0d5e">WETH</option>
+              <option value="0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE" selected>OKB (Native)</option>
+              <option value="0x1e4a5963abfd975d8c9021ce480b42188849d41d">USDT</option>
             </select>
           </div>
           <div>
             <div class="stat-cell-label">TO TOKEN</div>
             <select id="toToken" style="width:100%;background:var(--bg);border:1px solid var(--border);color:var(--white);padding:8px 12px;font-family:var(--mono);font-size:12px;margin-top:4px;">
-              <option value="0x74b7f16337b8972027f6196a17a631ac6de26d22">USDT</option>
+              <option value="0x1e4a5963abfd975d8c9021ce480b42188849d41d" selected>USDT</option>
               <option value="0xEeeeeEeeeEeEeeEeEeEeeEEEeeeeEeeeeeeeEEeE">OKB (Native)</option>
             </select>
           </div>
@@ -903,7 +903,7 @@ function showPage(id){
    ═══════════════════════════════════════════════════════════════ */
 
 // ▼▼▼ CHANGE THIS to your Vercel deployment URL ▼▼▼
-const PROXY_BASE = 'https://chainmind-x-layer.vercel.app/api/okx';  // e.g. 'https://chainmind-backend.vercel.app/api/okx'
+const PROXY_BASE = '';  // e.g. 'https://chainmind-backend.vercel.app/api/okx'
 // ▲▲▲ CHANGE THIS ▲▲▲
 
 const OKX_DIRECT = 'https://web3.okx.com/api/v6/dex/aggregator';
