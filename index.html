@@ -586,16 +586,14 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);min-height:
 
   <div style="display:grid;grid-template-columns:1fr 1fr;gap:24px;margin:40px 0;">
     <div>
-      <div class="section-label">02 // LEDGER</div>
-      <div class="section-head" data-i18n="pay.records_title">PAYMENT RECORDS</div>
+      <div class="section-label">02 // LIVE DATA</div>
+      <div class="section-head" data-i18n="pay.records_title">X LAYER TOKEN PRICES</div>
       <div class="panel" style="margin-top:20px;">
         <div class="panel-body" style="padding:0;">
           <table class="tbl">
-            <thead><tr><th data-i18n="pay.tx_id">TRANSACTION ID</th><th data-i18n="pay.timestamp">TIMESTAMP</th><th data-i18n="pay.asset">ASSET</th><th data-i18n="pay.status">STATUS</th></tr></thead>
-            <tbody>
-              <tr><td class="cyan">#X402-9A82-C1</td><td style="font-family:var(--mono);font-size:11px;">2024.05.22 // 14:32:01</td><td>4.82 ETH</td><td><span class="badge b-cyan" data-i18n="pay.paid">PAID</span></td></tr>
-              <tr><td class="cyan">#X402-1B33-F9</td><td style="font-family:var(--mono);font-size:11px;">2024.05.22 // 13:15:44</td><td>1,240 USDC</td><td><span class="badge b-cyan" data-i18n="pay.paid">PAID</span></td></tr>
-              <tr><td class="cyan">#X402-772B-E2</td><td style="font-family:var(--mono);font-size:11px;">2024.05.22 // 12:01:18</td><td>0.12 WBTC</td><td><span class="badge b-amber" data-i18n="pay.pending">PENDING</span></td></tr>
+            <thead><tr><th>TOKEN</th><th>PRICE (USD)</th><th>LIQUIDITY</th><th data-i18n="pay.status">STATUS</th></tr></thead>
+            <tbody id="payTokenTable">
+              <tr><td colspan="4" style="text-align:center;color:var(--dark-gray);padding:20px;">Loading token data...</td></tr>
             </tbody>
           </table>
         </div>
@@ -644,21 +642,18 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);min-height:
       <div class="display-lg">MULTI-AGENT<br><span style="color:var(--cyan)" data-i18n="collab.hero_cyan">COLLABORATION</span></div>
     </div>
     <div class="page-hero-right">
-      <div class="page-hero-stat-label" data-i18n="collab.agents_label">ACTIVE AGENTS</div>
-      <div class="page-hero-stat">4</div>
+      <div class="page-hero-stat-label" data-i18n="collab.agents_label">ACTIVE DEX SOURCES</div>
+      <div class="page-hero-stat" id="collabAgentCount">—</div>
     </div>
   </div>
 
   <div class="panel">
-    <div class="panel-head"><span class="panel-label" data-i18n="collab.net_label">DISCOVERED AGENT NETWORK</span><span class="panel-badge pb-green" data-i18n="collab.mesh">● MESH ACTIVE</span></div>
+    <div class="panel-head"><span class="panel-label" data-i18n="collab.net_label">X LAYER DEX NETWORK</span><span class="panel-badge pb-green" id="collabMeshStatus">● LOADING</span></div>
     <div class="panel-body" style="padding:0;">
       <table class="tbl">
-        <thead><tr><th>AGENT</th><th data-i18n="collab.th1">SPECIALTY</th><th data-i18n="collab.th2">REPUTATION</th><th data-i18n="collab.th3">STATUS</th></tr></thead>
-        <tbody>
-          <tr><td><strong>YieldMaxi.agent</strong></td><td data-i18n="collab.a1">LP Optimization</td><td class="cyan">97/100</td><td><span class="badge b-green" data-i18n="collab.conn">CONNECTED</span></td></tr>
-          <tr><td><strong>RiskGuard.agent</strong></td><td data-i18n="collab.a2">Risk Hedging</td><td class="cyan">94/100</td><td><span class="badge b-green" data-i18n="collab.conn">CONNECTED</span></td></tr>
-          <tr><td><strong>AlphaHunter.agent</strong></td><td data-i18n="collab.a3">Project Discovery</td><td class="amber">88/100</td><td><span class="badge b-amber" data-i18n="collab.neg">NEGOTIATING</span></td></tr>
-          <tr><td><strong>GasOptimizer.agent</strong></td><td data-i18n="collab.a4">Gas Optimization</td><td class="cyan">92/100</td><td><span class="badge b-green" data-i18n="collab.conn">CONNECTED</span></td></tr>
+        <thead><tr><th>DEX</th><th>DEX ID</th><th>PROTOCOL</th><th data-i18n="collab.th3">STATUS</th></tr></thead>
+        <tbody id="collabAgentTable">
+          <tr><td colspan="4" style="text-align:center;color:var(--dark-gray);padding:20px;">Loading DEX network...</td></tr>
         </tbody>
       </table>
     </div>
@@ -686,8 +681,8 @@ body{background:var(--bg);color:var(--white);font-family:var(--sans);min-height:
     <div class="section-label">02 // RESULTS</div>
     <div class="section-head" data-i18n="collab.result_title">COLLABORATION OUTPUT</div>
     <div class="signal-box" style="margin-top:20px;">
-      <div class="signal-label">◈ MULTI-AGENT RESULT</div>
-      <span data-i18n-html="collab.result_body">📈 Post-collab strategy APY: 24.5% → 33.1% (+35% improvement)<br>🛡️ Max drawdown protection: 5% auto stop-loss<br>⛽ Gas saved: 42% (batch execution optimization)<br>💳 Collaboration fee: 1.2 USDC (x402 auto-settled)<br>♻️ Significant net yield improvement → Multi-Agent network effect verified ✅</span>
+      <div class="signal-label">◈ NETWORK SUMMARY</div>
+      <span id="collabSummary">Loading network data...</span>
     </div>
   </div>
 
@@ -1152,6 +1147,12 @@ async function loadAllData() {
 
   // ── Update Route Page with real quote comparison ──
   loadRouteData(latency);
+
+  // ── Update Pay Page with real token prices ──
+  loadPayData();
+
+  // ── Update Collab Page with real DEX network ──
+  loadCollabData();
 }
 
 // ── Yield Page: Load real token market data ──
@@ -1220,6 +1221,82 @@ function connectWallet() {
     }).catch(e => alert('Connection failed: ' + e.message));
   } else {
     window.open('https://www.okx.com/web3', '_blank');
+  }
+}
+
+// ── Pay Page: Show real token prices from X Layer ──
+async function loadPayData() {
+  if (allTokens.length === 0) return;
+  const tbody = document.getElementById('payTokenTable');
+  if (!tbody) return;
+
+  // Get quotes for each token against USDT to show prices
+  const usdt = allTokens.find(t => t.tokenSymbol === 'USDT');
+  if (!usdt) return;
+  const rows = [];
+
+  for (const token of allTokens.filter(t => t.tokenSymbol !== 'USDT').slice(0, 8)) {
+    try {
+      const dec = token.decimal || token.decimals || '18';
+      const amount = BigInt(10) ** BigInt(parseInt(dec));
+      const data = await okxFetch('/api/v6/dex/aggregator/quote', {
+        chainIndex: XLAYER_CHAIN,
+        fromTokenAddress: token.tokenContractAddress,
+        toTokenAddress: usdt.tokenContractAddress,
+        amount: amount.toString()
+      });
+      if (data.code === '0' && data.data && data.data[0]) {
+        const q = data.data[0];
+        const price = parseFloat(q.fromToken?.tokenUnitPrice || '0');
+        const liq = (q.dexRouterList || []).length;
+        rows.push(`<tr><td><strong>${token.tokenSymbol}</strong></td><td class="cyan">$${price.toFixed(4)}</td><td>${liq} route${liq !== 1 ? 's' : ''}</td><td><span class="badge b-green">● LIVE</span></td></tr>`);
+      }
+    } catch(e) {}
+  }
+
+  if (rows.length > 0) {
+    tbody.innerHTML = rows.join('');
+  } else {
+    tbody.innerHTML = '<tr><td colspan="4" style="text-align:center;color:var(--dark-gray);padding:20px;">No price data available</td></tr>';
+  }
+}
+
+// ── Collab Page: Show real DEX liquidity sources as network ──
+function loadCollabData() {
+  const tbody = document.getElementById('collabAgentTable');
+  const countEl = document.getElementById('collabAgentCount');
+  const statusEl = document.getElementById('collabMeshStatus');
+  const summaryEl = document.getElementById('collabSummary');
+
+  if (liquidityData.length > 0) {
+    if (countEl) countEl.textContent = liquidityData.length;
+    if (statusEl) { statusEl.textContent = '● MESH ACTIVE'; statusEl.className = 'panel-badge pb-green'; }
+
+    if (tbody) {
+      tbody.innerHTML = liquidityData.map(s => {
+        const name = s.dexName || s.name || 'Unknown';
+        const id = s.dexId || s.id || '—';
+        const proto = name.includes('V3') ? 'Concentrated AMM' :
+                      name.includes('V2') ? 'Classic AMM' :
+                      name.includes('Curve') ? 'StableSwap' :
+                      name.includes('Pancake') ? 'Multi-fee AMM' : 'AMM';
+        return `<tr><td><strong>${name}</strong></td><td class="cyan">${id}</td><td>${proto}</td><td><span class="badge b-green">● ACTIVE</span></td></tr>`;
+      }).join('');
+    }
+
+    if (summaryEl) {
+      const v2Count = liquidityData.filter(s => (s.dexName||'').includes('V2')).length;
+      const v3Count = liquidityData.filter(s => (s.dexName||'').includes('V3')).length;
+      const otherCount = liquidityData.length - v2Count - v3Count;
+      summaryEl.innerHTML = 
+        `🌐 Total DEX sources on X Layer: <span style="color:var(--cyan)">${liquidityData.length}</span><br>` +
+        `📊 V2 AMM pools: ${v2Count} | V3 Concentrated: ${v3Count} | Other: ${otherCount}<br>` +
+        `⚡ All sources available for aggregated routing<br>` +
+        `🔗 Chain: X Layer (chainIndex: 196) — Status: <span style="color:var(--success)">● ONLINE</span>`;
+    }
+  } else {
+    if (countEl) countEl.textContent = '—';
+    if (statusEl) { statusEl.textContent = '⚠️ LOADING'; statusEl.className = 'panel-badge b-amber'; }
   }
 }
 
